@@ -35,13 +35,12 @@ angular.module('concentrate.services', [])
       keys.push(key)
     }
   }
-  console.log("keys ", keys, keys.length)
-  var match = function(cardOne, cardTwo) {
 
+  var match = function(cardOne, cardTwo) {
     return pairs[cardOne] === cardTwo || pairs[cardTwo] === cardOne? true : false;
   }
+
   function shuffleArray(array, width) {
-    console.log("shuffling array", width)
     for (var i = width - 1; i >= 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = array[i];
@@ -53,16 +52,12 @@ angular.module('concentrate.services', [])
   //shuffle the array and take the first three.
   var getPairs = function(number){
     keys = shuffleArray(keys, 25);
-    console.log("keys ", keys, keys.length)
     //loop through keys randomly, grab number
     var cardObj = {};
     for(var i = 0; i < number; i ++) {
-
-    var property = keys[i];
-    cardObj[property] = pairs[property];
-
+      var property = keys[i];
+      cardObj[property] = pairs[property];
     }
-    console.log(cardObj);
     return cardObj
   }
 

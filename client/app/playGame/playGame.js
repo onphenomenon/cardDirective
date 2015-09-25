@@ -36,13 +36,8 @@ angular.module('playGame', [])
 
     console.log("scope cards", $scope.cards);
   }
-  $scope.init();
-  console.log("skill ", $scope.skill)
-  console.log("pairs ", $scope.pairs)
-
-
   //create array of card objects for card array with states.
-
+  $scope.init();
 
 
   $scope.flipCard = function(cardModel) {
@@ -51,46 +46,25 @@ angular.module('playGame', [])
     if($scope.pairCheck.length < 2) {
       $scope.pairCheck.push(cardModel)
       cardModel.state = cardModel.face;
-      console.log("length ", $scope.pairCheck.length);
     }
     if($scope.pairCheck.length === 2) {
-
       //check if it's a match
       var match = Game.match($scope.pairCheck[0].face, $scope.pairCheck[1].face)
-
       if(match){
-        console.log("MATCH MATCH MATCH")
          $timeout(function () {
              $scope.pairCheck[0].state = "match.png",
               $scope.pairCheck[1].state = "match.png"
               $scope.pairCheck = [];
           }, 1000);
-
       } else {
-        console.log("NOOOOOO MATCH", $scope.pairCheck[0],  $scope.pairCheck[1])
         $timeout(function () {
             $scope.pairCheck[0].state = $scope.pairCheck[0].back;
             $scope.pairCheck[1].state = $scope.pairCheck[1].back;
             $scope.pairCheck = [];
           }, 1000);
-
-
         }
       }
-
     }
 
   });
-
-
-  //need to keep track of which two cards are flipped.
-
-  // cards[]=[flipped, n]
-  // $scope.flipCard = function(cardModel) {
-
-  // }
-
-  //click function, check in game object for key value pair,
-  //make pair disappear/stay
-  //all disappear, game over
 
