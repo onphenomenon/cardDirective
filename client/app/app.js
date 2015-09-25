@@ -1,7 +1,7 @@
 angular.module('concentrate', [
   // 'shortly.poem',
-  'concentrate.auth',
-  'concentrate.gallery',
+  'auth',
+  'playGame',
   'ui.router',
   'concentrate.services',
   'ngRoute',
@@ -18,18 +18,18 @@ angular.module('concentrate', [
     .state('auth', {
       url: "/auth",
       views: {
-        'auth': {
+        "auth" : {
           templateUrl: "app/auth/auth.html",
           controller: 'AuthController'
         }
       }
     })
-    .state('gallery', {
-      url: "/gallery",
+    .state('skill', {
+      url: "/:skill",
       views: {
-        'gallery': {
-          templateUrl: "app/gallery/gallery.html",
-          controller: 'GalleryController'
+        "game" : {
+          templateUrl: "app/playGame/playGame.html",
+          controller: 'gameController'
         }
       }
 

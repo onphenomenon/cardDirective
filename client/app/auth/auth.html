@@ -1,6 +1,12 @@
-
-
-
+ <h3>Play Concentration!</h3>
+ <h4>Level of Game</h4>
+    <pre>{{ level || 'null'}}</pre>
+    <div class="btn-group">
+        <label class="btn btn-primary" ng-model="level" btn-radio="'easy'">Easy</label>
+        <label class="btn btn-primary" ng-model="level" btn-radio="'medium'">Medium</label>
+        <label class="btn btn-primary" ng-model="level" btn-radio="'hard'">Hard</label>
+    </div>
+    <button type="submit" class="btn btn-success" ng-click="chooseGame()" >Play</button>
 
 
 

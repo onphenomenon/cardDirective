@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haiku</title>
+    <title>Concentration</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
 
   </head>
@@ -11,25 +12,25 @@
     <header>
     </header>
 
-    <div id="content">
-      <div ui-view="auth"></div>
-      <div ui-view="gallery"></div>
-    </div>
-    <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
-    <!-- <div ng-view></div> -->
+    <div class="container">
+
+      <div ui-view="auth" ></div>
+      <div ui-view="game" ></div>
     <footer id="main-footer">
         <p>
             Karianne Burns. Copyright &copy; 2015 - 2020.
         </p>
 
     </footer>
+    </div>
+
 
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="app/auth/auth.js"></script>
-    <script src="app/gallery/gallery.js"></script>
+    <script src="app/playGame/playGame.js"></script>
     <script src="app/services/services.js"></script>
     <script src="app/app.js"></script>
   </body>
