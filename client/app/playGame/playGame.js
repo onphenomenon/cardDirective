@@ -4,7 +4,7 @@ angular.module('playGame', [])
   $scope.skill = $stateParams.skill;
   $scope.cards = [];
   $scope.pairCheck = [];
-  $scope.pairs = $scope.skill === "easy" ? 6 : $scope.skill === "medium" ? 12 : $scope.skill === "hard" ? 24 : null;
+  $scope.pairs = $scope.skill === "easy" ? 6 : $scope.skill === "medium" ? 12 : $scope.skill === "hard" ? 25 : null;
   $scope.matchedPairs = Game.getPairs($scope.pairs);
   $scope.init = function() {
     for(var key in $scope.matchedPairs) {
@@ -25,7 +25,7 @@ angular.module('playGame', [])
       }
     }
     Game.shuffleArray($scope.cards, $scope.pairs*2);
-    while($scope.cards.length <= 48) {
+    while($scope.cards.length <= 50) {
       var cardModel = {
         state: "canvas.png",
         face : null,

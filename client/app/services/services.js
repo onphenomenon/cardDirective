@@ -26,7 +26,8 @@ angular.module('concentrate.services', [])
     "jackclubs.png" : "jackspades.png",
     "jackdiamonds.png" : "jackhearts.png",
     "kingclubs.png" : "kingspades.png",
-    "kingdiamonds.png" : "kinghearts.png"
+    "kingdiamonds.png" : "kinghearts.png",
+    "queendiamonds.png" : "queenhearts.png"
   }
   var keys = [];
   for(var key in pairs) {
@@ -51,7 +52,7 @@ angular.module('concentrate.services', [])
   }
   //shuffle the array and take the first three.
   var getPairs = function(number){
-    keys = shuffleArray(keys, 24);
+    keys = shuffleArray(keys, 25);
     console.log("keys ", keys, keys.length)
     //loop through keys randomly, grab number
     var cardObj = {};
