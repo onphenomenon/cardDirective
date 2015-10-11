@@ -44,16 +44,17 @@ angular.module('playGame', [])
         noclick: false
       }
 
-
-
       scope.name = config.back;
       //console.log("front", front);
 
 
-      element.on('click', function(){
+      element.on('click', function(event){
         console.log("clicked");
         if(!config.noclick){
           scope.name = config.front;
+          console.log(element);
+          element.addClass("face")
+          console.log(element);
           scope.$apply();
           scope.$emit("card_flip", scope.name);
         }
