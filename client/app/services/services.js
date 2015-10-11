@@ -40,7 +40,7 @@ angular.module('concentrate.services', [])
     return pairs[cardOne] === cardTwo || pairs[cardTwo] === cardOne? true : false;
   }
 
-  function shuffleArray(array, width) {
+  var shuffleArray = function(array, width) {
     for (var i = width - 1; i >= 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = array[i];
@@ -53,12 +53,14 @@ angular.module('concentrate.services', [])
   var getPairs = function(number){
     keys = shuffleArray(keys, 25);
     //loop through keys randomly, grab number
-    var cardObj = {};
+    var cardArray = [];
     for(var i = 0; i < number; i ++) {
       var property = keys[i];
-      cardObj[property] = pairs[property];
+      cardArray.push(property);
+      cardArray.push(pairs[property]);
     }
-    return cardObj
+    cardArray = shuffleArray(cardArray, number)
+    return cardArray
   }
 
 
@@ -68,4 +70,3 @@ angular.module('concentrate.services', [])
     getPairs: getPairs
   }
 })
-

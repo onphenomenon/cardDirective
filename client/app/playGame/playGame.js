@@ -5,66 +5,104 @@ angular.module('playGame', [])
   $scope.cards = [];
   $scope.pairCheck = [];
   $scope.pairs = $scope.skill === "easy" ? 6 : $scope.skill === "medium" ? 12 : $scope.skill === "hard" ? 25 : null;
-  $scope.matchedPairs = Game.getPairs($scope.pairs);
-  $scope.init = function() {
-    for(var key in $scope.matchedPairs) {
-      if($scope.matchedPairs.hasOwnProperty(key)) {
-        //objects with flipp
-        var cardModel = {
-          state: "panda.gif",
-          face : key,
-          back : "panda.gif" }
+  $scope.cards = Game.getPairs($scope.pairs);
+  $scope.matches = 0;
 
-        $scope.cards.push(cardModel);
-        var cardModel = {
-          state: "panda.gif",
-          face : $scope.matchedPairs[key],
-          back : "panda.gif" }
+  $scope.$on('card_flip', function(event, data) {
+      console.log("data ", data);
+      console.log(event)
+      $scope.pairCheck.push(data);
+      if($scope.pairCheck.length === 2) {
+        $scope.$broadcast("no_click");
 
-        $scope.cards.push(cardModel);
+         var match = Game.match($scope.pairCheck[0], $scope.pairCheck[1]);
+         if(match){
+          $scope.$broadcast('match');
+          $scope.matches++;
+          if($scope.matches === $scope.pairs){
+            alert("WINNER")
+          }
+         } else {
+          $scope.$broadcast("no_match")
+         }
+         $scope.pairCheck = [];
       }
-    }
-    Game.shuffleArray($scope.cards, $scope.pairs*2);
-    while($scope.cards.length <= 50) {
-      var cardModel = {
-        state: "canvas.png",
-        face : null,
-        back : null
+      //tell all cards to go back to
+
+
+    })
+
+})
+.directive("card", function($timeout){
+
+    var linker = function(scope, element, attrs){
+
+      var config = {
+        back : "panda.gif",
+        match : "match.png",
+        front : scope.name,
+        noclick: false
       }
-      $scope.cards.push(cardModel);
-    }
-
-    console.log("scope cards", $scope.cards);
-  }
-  //create array of card objects for card array with states.
-  $scope.init();
 
 
-  $scope.flipCard = function(cardModel) {
 
-    //if pair check has two cards, not allowd to do a third
-    if($scope.pairCheck.length < 2) {
-      $scope.pairCheck.push(cardModel)
-      cardModel.state = cardModel.face;
-    }
-    if($scope.pairCheck.length === 2) {
-      //check if it's a match
-      var match = Game.match($scope.pairCheck[0].face, $scope.pairCheck[1].face)
-      if(match){
-         $timeout(function () {
-             $scope.pairCheck[0].state = "match.png",
-              $scope.pairCheck[1].state = "match.png"
-              $scope.pairCheck = [];
-          }, 1000);
-      } else {
-        $timeout(function () {
-            $scope.pairCheck[0].state = $scope.pairCheck[0].back;
-            $scope.pairCheck[1].state = $scope.pairCheck[1].back;
-            $scope.pairCheck = [];
-          }, 1000);
+      scope.name = config.back;
+      //console.log("front", front);
+
+
+      element.on('click', function(){
+        console.log("clicked");
+        if(!config.noclick){
+          scope.name = config.front;
+          scope.$apply();
+          scope.$emit("card_flip", scope.name);
         }
-      }
+
+      });
+      scope.$on('no_click', function(){
+        config.noclick = true;
+      })
+
+      scope.$on('no_match', function(event){
+        console.log("NO MATCH")
+
+        $timeout(function () {
+            scope.name = config.back;
+            scope.$apply();
+            config.noclick = false;
+            }, 2000);
+
+      });
+      scope.$on('match', function(event){
+        console.log("MATCH")
+
+
+          $timeout(function () {
+            if(scope.name === config.front){
+              scope.name = config.match;
+              scope.$apply();
+            } else {
+              config.noclick = false;
+            }
+          }, 2000);
+
+
+
+      })
+
+      };
+
+
+
+    return {
+      restrict: "E",
+      link: linker,
+      scope: {
+        name: "="
+      },
+      template: [
+        "<img ng-src='images/cards/{{name}}'>",
+      ].join("")
+
     }
-
   });
-

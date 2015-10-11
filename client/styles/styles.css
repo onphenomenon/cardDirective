@@ -1,0 +1,21 @@
+*{
+  /*box-sizing: border-box;*/
+}
+.row {
+    margin: 15px;
+}
+.container {
+  background-color: #EBFFEB;
+}
+#main-footer {
+  background-color: #FFFFFF;
+}
+card {
+  display: inline-block;
+  width: 122px;
+  height: 169px;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+
