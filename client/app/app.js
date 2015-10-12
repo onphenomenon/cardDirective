@@ -4,11 +4,10 @@ angular.module('concentrate', [
   'playGame',
   'ui.router',
   'concentrate.services',
-  'ngRoute',
   'ui.bootstrap'
 
 ])
-.config(function($routeProvider, $httpProvider, $stateProvider, $urlRouterProvider) {
+.config(function($httpProvider, $stateProvider, $urlRouterProvider) {
 
 
 

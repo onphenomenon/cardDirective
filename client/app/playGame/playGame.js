@@ -1,6 +1,6 @@
 angular.module('playGame', [])
 
-.controller('gameController', function($scope, $stateParams, $window, $location, Game, $timeout) {
+.controller('gameController', function($scope, $stateParams, Game) {
   $scope.skill = $stateParams.skill;
   $scope.cards = [];
   $scope.pairCheck = [];
@@ -10,7 +10,7 @@ angular.module('playGame', [])
 
   $scope.$on('card_flip', function(event, data) {
       console.log("data ", data);
-      console.log(event)
+      console.log("event", event)
       $scope.pairCheck.push(data);
       if($scope.pairCheck.length === 2) {
         $scope.$broadcast("no_click");
@@ -45,16 +45,12 @@ angular.module('playGame', [])
       }
 
       scope.name = config.back;
-      //console.log("front", front);
 
 
       element.on('click', function(event){
-        console.log("clicked");
         if(!config.noclick){
           scope.name = config.front;
-          console.log(element);
           element.addClass("face")
-          console.log(element);
           scope.$apply();
           scope.$emit("card_flip", scope.name);
         }
@@ -66,29 +62,30 @@ angular.module('playGame', [])
 
       scope.$on('no_match', function(event){
         console.log("NO MATCH")
-
         $timeout(function () {
-            scope.name = config.back;
-            scope.$apply();
-            config.noclick = false;
-            }, 2000);
+            if(scope.name === config.front || scope.name === config.back){
+              if(scope.name === config.front){
+                scope.name = config.back;
+                scope.$apply();
+              }
+              config.noclick = false;
+            }
+        }, 2000);
 
       });
+
       scope.$on('match', function(event){
         console.log("MATCH")
-
-
           $timeout(function () {
             if(scope.name === config.front){
               scope.name = config.match;
               scope.$apply();
             } else {
-              config.noclick = false;
+              if(scope.name === config.back){
+                config.noclick = false;
+              }
             }
           }, 2000);
-
-
-
       })
 
       };
@@ -98,9 +95,6 @@ angular.module('playGame', [])
     return {
       restrict: "E",
       link: linker,
-      scope: {
-        name: "="
-      },
       template: [
         "<img ng-src='images/cards/{{name}}'>",
       ].join("")
